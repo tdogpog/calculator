@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <link rel='stylesheet' href='style.css'>
+</head>
+<body>
+
+    <div id="container"></div>
+
+
+    <script>
+
+        let num1= null;
+
+        let num2=null;
+
+        let operator=null;
+
+        const add = function(a,b) {
+        return a+b;
+        };
+
+        const subtract = function(a,b) {
+        return a-b;  
+        };
+
+        const sum = function(array) {
+        return array.reduce((total,current)=> total+current,0);
+ 
+        };
+
+        const mult = function(array) {
+        return array.reduce((product,current)=>product*current,1);
+        };
+
+        const multiply= function(a,b){
+            return a*b;
+        };
+
+        const division= function(a,b){
+            return a/b;
+        };
+
+        const operate=function(num1,num2,operator){
+            if(operator==='+'){
+                return add(num1,num2);
+
+            }
+
+            else if(operator==='-'){
+                return subtract(num1,num2);
+            }
+            
+            else if(operator==='*'){
+                return multiply(num1,num2);
+            }
+
+            else if(operator==='/'){
+                return division(num1,num2);
+            };
+
+
+        }
+
+    </script>
+</body>
+</html>
