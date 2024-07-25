@@ -10,7 +10,9 @@
 
     <div id="calculator">
             <div class="top_section">
-                <div id="screen"></div>
+                <div id="screen">
+                    <div id="inner-content"></div>
+                </div>
             </div>
             <div class='buttons'>
             
@@ -40,8 +42,10 @@
 
                     <div class='row'>
                         <div class="main_items">0</div>
-                        <div class="main_items">+</div>
+                        <div class="func_buttons">+</div>
                         <div class="func_buttons">=</div>
+                        <div class="func_buttons">CLEAR</div>
+
                     </div>
                 </div>
 
@@ -52,11 +56,15 @@
 
     <script>
 
+        //math intialization
+
         let num1= null;
 
         let num2=null;
 
         let operator=null;
+
+        let awaitOperand=false;
 
         const add = function(a,b) {
         return a+b;
@@ -83,6 +91,73 @@
             return a/b;
         };
 
+        //event listeners
+        const main_buttons=document.getElementsByClassName('main_items');
+        
+        const func_buttons=document.getElementsByClassName('func_buttons');
+
+        const innerContent=document.getElementById('inner-content');
+
+
+        for (let i=0;i<main_buttons.length;i++){
+
+            main_buttons[i].addEventListener('click',()=>{
+
+                const digitText=main_buttons[i].textContent.trim();
+
+                if(awaitOperand){
+                    innerContent.textContent='';
+                    awaitOperand=false;
+                }
+
+                innerContent.textContent+=digitText;
+        
+            });
+
+        }
+
+
+        for (let i=0;i<func_buttons.length;i++){
+
+        func_buttons[i].addEventListener('click',()=>{
+
+            const func_text=func_buttons[i].textContent.trim();
+
+            if(func_text==='CLEAR'){
+                num1=num2=operator=null;
+                innerContent.textContent='';
+                awaitOperand=false;
+            }
+
+            else if(func_text==='='){
+                if(operator && innerContent.textContent){
+                    num2=parseFloat(innerContent.textContent);
+                    const result=operate(num1,num2,operator);
+                    num1=result;
+                    innerContent.textContent=num1;
+                    num2=null;
+                    operator=null;
+                    awaitOperand=true;
+                }
+
+            }
+            else{
+                if(innerContent.textContent){
+                    num1=parseFloat(innerContent.textContent);
+                    //innerContent.textContent+=func_text
+                    operator=func_text;
+                    awaitOperand=true;
+                    
+                }
+            }
+
+            });
+
+        }
+           
+
+
+        //operation 
         const operate=function(num1,num2,operator){
             if(operator==='+'){
                 return add(num1,num2);
@@ -93,11 +168,11 @@
                 return subtract(num1,num2);
             }
             
-            else if(operator==='*'){
+            else if(operator==='x'){
                 return multiply(num1,num2);
             }
 
-            else if(operator==='/'){
+            else if(operator==='÷'){
                 return division(num1,num2);
             };
 
