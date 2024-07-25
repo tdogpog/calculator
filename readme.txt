@@ -1,0 +1,1 @@
+Basic accounting style calculator coded in JS with HTML/CSS for UI.
